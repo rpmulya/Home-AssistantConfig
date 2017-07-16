@@ -1,0 +1,13 @@
+- zone:
+  name: Home
+  latitude: -6.258324
+  longitude: 106.871478
+  radius: 200
+  icon: mdi:home
+
+- zone 2:
+  name: Work
+  latitude: -6.2055346
+  longitude: 106.802785
+  radius: 300
+  icon: mdi:briefcase

@@ -1,0 +1,13 @@
+- platform: nmap_tracker
+  track_new_devices: no
+  hosts: 192.168.36.1/24
+  home_interval: 10
+  interval_seconds: 40
+  consider_home: 120
+  exclude:
+    - 192.168.36.1
+    - 192.168.36.2
+    - 192.168.36.3
+    - 192.168.36.62
+- platform: owntracks
+  max_gps_accuracy: 100

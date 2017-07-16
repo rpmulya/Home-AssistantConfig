@@ -1,0 +1,73 @@
+- id: SunsetLightOn
+  alias: Turn on light when sun sets
+  initial_state: true
+  hide_entity: false
+  trigger:
+    platform: sun
+    event: sunset
+    offset: -00:10:00
+  action:
+  - service: light.turn_on
+    entity_id: group.external_lights
+  - service: notify.notifyRPM
+    data:
+      title: Sunset
+      message: Lampu dihidupkan
+  - service: notify.notifyHtml5
+    data:
+      title: Sunset
+      message: Lampu luar dihidupkan
+- id: SunriseLightOff
+  alias: Turn off light when sun rises
+  initial_state: true
+  hide_entity: false
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: -00:15:00
+  action:
+  - service: light.turn_off
+    entity_id: group.external_lights
+  - service: notify.notifyRPM
+    data:
+      title: Sunrise
+      message: Lampu dimatikan
+  - service: notify.notifyHtml5
+    data:
+      title: Sunrise
+      message: Lampu luar dimatikan
+- id: PingPongBot
+  alias: ping pong bot
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /ping
+  action:
+  - service: notify.notifyRPM
+    data:
+      title: Yuk
+      message: pong
+- id: SunElevationDark
+  alias: SunElevationDark
+  trigger:
+  - below: '2'
+    entity_id: sun.sun
+    platform: numeric_state
+    value_template: '{{ state.attributes.elevation }}'
+  action:
+  - data:
+      message: Sun elevation at below 2
+    service: notify.notifyHtml5
+- id: UpdateAvailableNotif
+  alias: Update Available Notifications
+  trigger:
+    platform: state
+    entity_id: updater.updater
+  action:
+  - service: notify.notifyRPM
+    data:
+      message: Update for Home Assistant is available.
+  - service: notify.notifyHtml5
+    data:
+      message: Update for Home Assistant is available.

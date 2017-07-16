@@ -1,0 +1,63 @@
+- platform: moon
+- platform: time_date
+  display_options:
+    - 'time'
+    - 'date'
+    - 'date_time'
+# - platform: darksky
+#   api_key: !secret darksky_api_key
+#   monitored_conditions:
+#     - summary
+#     - icon
+#     - temperature
+#     - apparent_temperature
+#     - temperature_min
+#     - temperature_max
+#     - humidity
+#     - pressure
+#     - visibility
+#     - wind_speed
+#     - wind_bearing
+#     - cloud_cover
+#     - ozone
+#     - daily_summary
+# - platform: yweather
+#   monitored_conditions:
+#     - weather
+#     - weather_current
+#     - temp_min
+#     - temp_max
+#     - wind_speed
+#     - pressure
+#     - visibility
+#     - humidity
+#     - temperature
+- platform: wunderground
+  api_key: !secret wu_api_key
+  monitored_conditions:
+    - alerts
+    - feelslike_c
+    - heat_index_c
+    - observation_time
+    - precip_1d_mm
+    - precip_today_metric
+    - pressure_mb
+    - relative_humidity
+    - solarradiation
+    - temp_c
+    - temp_high_1d_c
+    - temp_low_1d_c
+    - UV
+    - visibility_km
+    - weather
+    - wind_dir
+    - wind_gust_kph
+    - wind_gust_1d_kph
+    - weather_1d_metric
+    - weather_1n_metric
+    - weather_2d_metric
+    - weather_2n_metric
+    - weather_3d_metric
+    - weather_3n_metric
+    - weather_4d_metric
+    - weather_4n_metric

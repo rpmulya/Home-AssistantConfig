@@ -1,0 +1,7 @@
+- platform: mqtt
+  state_topic: "cmnd/motion_front/POWER1"
+  name: "Motion Detector Depan"
+  device_class: motion
+  qos: 0
+  payload_on: "ON"
+  payload_off: "OFF"
