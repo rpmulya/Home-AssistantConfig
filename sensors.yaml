@@ -14,6 +14,19 @@
     - type: load_5m
     - type: load_15m
     - type: last_boot
+
+- platform: mqtt
+  name: "Temperature"
+  state_topic: "NodeMCU1/SuhuInt/Temperature"
+  qos: 0
+  unit_of_measurement: "ºC"
+
+- platform: mqtt
+  name: "Humidity"
+  state_topic: "NodeMCU1/SuhuInt/Humidity"
+  qos: 0
+  unit_of_measurement: "%"
+  
 - platform: wunderground
   api_key: !secret wu_api_key
   monitored_conditions:

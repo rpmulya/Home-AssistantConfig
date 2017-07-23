@@ -1,7 +1,28 @@
 - platform: mqtt
   state_topic: "cmnd/motion_front/POWER1"
-  name: "Motion Detector Depan"
+  name: "Teras"
   device_class: motion
   qos: 0
   payload_on: "ON"
   payload_off: "OFF"
+- platform: mqtt
+  state_topic: "NodeMCU1/Motion1/Status"
+  name: "Ruang Tamu"
+  device_class: motion
+  qos: 0
+  payload_on: "1"
+  payload_off: "0"
+- platform: mqtt
+  state_topic: "NodeMCU1/Door1/Status"
+  name: "Pintu Utama"
+  device_class: opening
+  qos: 0
+  payload_on: "1"
+  payload_off: "0"
+- platform: mqtt
+  state_topic: "NodeMCU1/Door2/Status"
+  name: "Pintu Dapur"
+  device_class: opening
+  qos: 0
+  payload_on: "1"
+  payload_off: "0"

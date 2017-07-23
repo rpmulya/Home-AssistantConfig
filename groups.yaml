@@ -3,9 +3,10 @@ default_view:
   icon: mdi:home
   entities:
   - group.awesome_people
-  - group.weather_overview
   - group.external_lights
   - group.motion_detectors
+  - group.alarms
+  - group.environment
 climate:
   view: true
   icon: mdi:thermometer
@@ -60,7 +61,26 @@ motion_detectors:
   name: Motion Detectors
   view: false
   entities:
-  - binary_sensor.motion_detector_depan
+  - binary_sensor.teras
+  - binary_sensor.ruang_tamu
+
+alarms:
+  name: Alarm
+  view: false
+  entities:
+  - binary_sensor.pintu_utama
+  - binary_sensor.pintu_dapur
+
+environment:
+  name: Home Environment
+  icon: mdi:home-variant
+  view: false
+  entities:
+  - sensor.date__time
+  - sun.sun
+  - sensor.moon
+  - sensor.temperature
+  - sensor.humidity
 daily_forecast:
   name: Daily Forecast
   view: false
@@ -77,9 +97,6 @@ weather_overview:
   name: Weather overview
   view: false
   entities:
-  - sensor.date__time
-  - sun.sun
-  - sensor.moon
   - sensor.pws_weather_1d_metric
   - sensor.pws_feelslike_c
   - sensor.pws_temp_high_1d_c
