@@ -26,3 +26,6 @@
   qos: 0
   payload_on: "1"
   payload_off: "0"
+- platform: mqtt
+  state_topic: dummy/floorplan/sensor
+  name: Floorplan

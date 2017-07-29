@@ -1,0 +1,18 @@
+platform: bwalarm
+name: House
+pending_time: 30
+trigger_time: 600
+alarm: automations.alarm_triggered
+warning: automations.alarm_warned
+headsup:
+    - binary_sensor.teras
+    - binary_sensor.pintu_utama
+    - binary_sensor.pintu_dapur
+immediate:
+    - binary_sensor.pintu_utama
+    - binary_sensor.pintu_dapur
+    - binary_sensor.ruang_tamu
+delayed:
+    - binary_sensor.teras
+notathome:
+    - binary_sensor.ruang_tamu

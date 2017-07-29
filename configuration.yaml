@@ -10,6 +10,9 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Asia/Jakarta
+  customize: !include customize.yaml
+
+
 
 # Show links to resources in log and frontend
 #introduction:
@@ -141,6 +144,8 @@ telegram_bot:
     allowed_chat_ids:
       - !secret rpmEdge_chat_id
 
+alarm_control_panel: !include alarm.yaml
+panel_custom: !include panel_custom.yaml
 binary_sensor: !include binary_sensors.yaml
 notify: !include notify.yaml
 sensor: !include sensors.yaml

@@ -48,6 +48,28 @@
     data:
       title: Yuk
       message: pong
+- id: AlarmWarn
+  alias: Alarm Warned
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.house
+    to: 'warning'
+  action:
+  - service: notify.notifyRPM
+    data:
+      title: Alarm Warning
+      message: Warning dari sensor {{states.alarm_control_panel.house.attributes.changed_by}}
+- id: AlarmOn
+  alias: Alarm Triggered
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.house
+    to: 'triggered'
+  action:
+  - service: notify.notifyRPM
+    data:
+      title: Alarm Triggered
+      message: Trigger dari sensor {{states.alarm_control_panel.house.attributes.changed_by}}
 - id: SunElevationDark
   alias: SunElevationDark
   trigger:
