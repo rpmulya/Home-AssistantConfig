@@ -14,7 +14,11 @@
     - type: load_5m
     - type: load_15m
     - type: last_boot
-
+- platform: google_geocode
+  name: RPM
+  origin: device_tracker.nyamuk_rpmedge
+  options: street, city
+  # display_zone: hide
 - platform: mqtt
   name: "Temperature"
   state_topic: "NodeMCU1/SuhuInt/Temperature"
@@ -31,7 +35,7 @@
     template_last_motion:
       friendly_name: 'Last Motion'
       value_template: >
-        {%- set sensors = [states.binary_sensor.teras, states.binary_sensor.ruang_tamu, states.binary_sensor.pintu_utama, states.binary_sensor.pintu_dapur] %}
+        {%- set sensors = [states.binary_sensor.teras, states.binary_sensor.ruang_tamu, states.binary_sensor.pintu_utama, states.binary_sensor.pintu_dapur, states.binary_sensor.pintu_ruang_makan] %}
         {% for sensor in sensors %}
           {% if as_timestamp(sensor.last_changed) == as_timestamp(sensors | map(attribute='last_changed') | max) %}
             {{ sensor.name }}

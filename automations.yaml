@@ -49,22 +49,22 @@
       title: Yuk
       message: pong
 - id: AlarmWarn
-  alias: Alarm Warned
+  alias: Alarm Warning
   trigger:
-  - platform: state
-    entity_id: alarm_control_panel.house
-    to: 'warning'
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: warning
   action:
-  - service: notify.notifyRPM
-    data:
-      title: Alarm Warning
+  - data:
       message: Warning dari sensor {{states.alarm_control_panel.house.attributes.changed_by}}
+      title: Alarm Warning
+    service: notify.notifyRPM
 - id: AlarmOn
   alias: Alarm Triggered
   trigger:
   - platform: state
     entity_id: alarm_control_panel.house
-    to: 'triggered'
+    to: triggered
   action:
   - service: notify.notifyRPM
     data:

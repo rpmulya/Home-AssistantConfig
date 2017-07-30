@@ -48,7 +48,7 @@ awesome_people:
   view: false
   entities:
   - device_tracker.90187c1b4a88
-  - device_tracker.nyamuk_rpmedge
+  - sensor.rpm
   - device_tracker.34a395c33c50
   - device_tracker.205ef7734ec8
   - device_tracker.00376de2226f
@@ -71,6 +71,7 @@ openings:
   entities:
   - binary_sensor.pintu_utama
   - binary_sensor.pintu_dapur
+  - binary_sensor.pintu_ruang_makan
 
 environment:
   name: Home Environment

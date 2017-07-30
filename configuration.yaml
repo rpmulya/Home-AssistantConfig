@@ -12,8 +12,9 @@ homeassistant:
   time_zone: Asia/Jakarta
   customize: !include customize.yaml
 
-
-
+# iOS component
+ios:
+  
 # Show links to resources in log and frontend
 #introduction:
 

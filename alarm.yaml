@@ -11,8 +11,10 @@ headsup:
 immediate:
     - binary_sensor.pintu_utama
     - binary_sensor.pintu_dapur
+    - binary_sensor.pintu_ruang_makan
     - binary_sensor.ruang_tamu
 delayed:
     - binary_sensor.teras
 notathome:
     - binary_sensor.ruang_tamu
+    - binary_sensor.pintu_ruang_makan
