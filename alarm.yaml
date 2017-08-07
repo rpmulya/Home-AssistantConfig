@@ -13,6 +13,8 @@ immediate:
     - binary_sensor.pintu_dapur
     - binary_sensor.pintu_ruang_makan
     - binary_sensor.ruang_tamu
+    - binary_sensor.ruang_cuci
+    - binary_sensor.dapur
 delayed:
     - binary_sensor.teras
 notathome:

@@ -15,25 +15,34 @@ groups:
 
   - name: Sensors
     entities:
-       -  sensor.dark_sky_temperature
-       -  sensor.temperature
+       -  sensor.dark_sky_apparent_temperature
+       -  sensor.suhu_ruang_tv
+       -  sensor.suhu_dapur
     #text_template: '${entity.state ? entity.state : "unknown"}'
     # An example of rounding up a number, i.e. a temperature of 90.1 becomes 91
-    text_template: '${entity.state ? Math.ceil(entity.state) : "undefined"}'  
+    #'${entity.state ? Math.ceil(entity.state) : "undefined"}'  
+    text_template: '${entity.state ? entity.state + "°C" : "undefined"}' 
     class_template: '
-      var temp = parseFloat(entity.state.replace("°", ""));
+      var temp = parseFloat(entity.state.replace("°C", ""));
       if (temp < 10)
-        return "temp-low";
+        return "temp-very-low-background";
       else if (temp < 30)
-        return "temp-medium";
+        return "temp-average-background";
       else
-        return "temp-high";
+        return "temp-very-high-background";
       '
-
+  - name: Motions
+    entities:
+      - sensor.template_last_motion 
+  - name: Lux
+    entities:
+      - sensor.ambient_light
+    text_template: '${entity.state ? entity.state + " Lux" : "undefined"}' 
   - name: Lights
     entities:
        - light.lampu_luar_belakang
        - light.lampu_luar_depan
+       - light.lampu_dapur
        # - group.kitchen_lights
        # - group.living_room_lights
     states:
@@ -44,7 +53,19 @@ groups:
     action:
       domain: homeassistant   # This optional parameter allows you to use other services such as homeassistant.toggle like here.
       service: toggle
-
+        #  MEDIA PLAYERS  #
+  - name: Media Players
+    entities:
+      - media_player.ruang_tv
+    states:
+      - state: 'off'
+        class: 'squeezebox-off'
+      - state: 'idle'
+        class: 'squeezebox-off'
+      - state: 'paused'
+        class: 'squeezebox-off'
+      - state: 'playing'
+        class: 'squeezebox-on'
   # - name: Switches
   #   entities:
   #      - switch.doorbell
@@ -74,14 +95,24 @@ groups:
         class: 'alarm-armed'
       - state: 'disarmed'
         class: 'alarm-disarmed'
-
+  #  DOORS  #
+  - name: Doors
+    entities:
+      - binary_sensor.pintu_utama
+      - binary_sensor.pintu_dapur
+      - binary_sensor.pintu_ruang_makan
+    states:
+      - state: 'off'
+        class: 'door_closed-90'
+      - state: 'on'
+        class: 'door_open-90'
+        
   - name: Binary sensors
     entities:
       - binary_sensor.teras
       - binary_sensor.ruang_tamu
-      - binary_sensor.pintu_utama
-      - binary_sensor.pintu_dapur
-      - binary_sensor.pintu_ruang_makan
+      - binary_sensor.ruang_cuci
+      - binary_sensor.dapur    
     states:
       - state: 'off'
         class: 'info-background'
@@ -92,7 +123,22 @@ groups:
         from_state: 'on'
         to_state: 'off'
         duration: 10
+################
+#  INFO PANEL  #
+################
 
+# DATE & TIME & WEATHER #
+  - name: Date
+    entities:
+      - sensor.floorplan_date
+    text_template: '${entity.state ? entity.state : "undefined"}'
+    class_template: 'return "static-text";'
+
+  - name: Time
+    entities:
+      - sensor.time
+    text_template: '${entity.state ? entity.state : "undefined"}'
+    class_template: 'return "static-text";'
   # - name: Cameras
   #   entities:
   #     - camera.hallway

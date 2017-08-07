@@ -4,10 +4,12 @@ default_view:
   entities:
   - group.awesome_people
   - group.external_lights
+  - group.internal_lights
   - group.motion_detectors
   - group.openings
   - group.environment
   - media_player.ruang_tv
+  - camera.kolam
 climate:
   view: true
   icon: mdi:thermometer
@@ -25,6 +27,7 @@ automation:
   - automation.turn_on_light_when_sun_sets
   - automation.turn_off_light_when_sun_rises
   - automation.SunElevationDark
+  - automation.kitchen_lights_onoff_based_on_motion
 resource:
   name: Resource
   icon: mdi:desktop-tower
@@ -58,13 +61,19 @@ external_lights:
   entities:
   - light.lampu_luar_belakang
   - light.lampu_luar_depan
+internal_lights:
+  name: Internal Lights
+  view: false
+  entities:
+  - light.lampu_dapur
 motion_detectors:
   name: Motion Detectors
   view: false
   entities:
   - binary_sensor.teras
   - binary_sensor.ruang_tamu
-
+  - binary_sensor.ruang_cuci
+  - binary_sensor.dapur
 openings:
   name: Doors and Windows
   view: false
@@ -81,7 +90,9 @@ environment:
   - sensor.date__time
   - sun.sun
   - sensor.moon
-  - sensor.temperature
+  - sensor.ambient_light
+  - sensor.suhu_ruang_tv
+  - sensor.suhu_dapur
   - sensor.humidity
 # daily_forecast:
 #   name: Daily Forecast

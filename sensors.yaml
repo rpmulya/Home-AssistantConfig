@@ -20,27 +20,60 @@
   options: street, city
   # display_zone: hide
 - platform: mqtt
-  name: "Temperature"
+  name: "Suhu Ruang TV"
   state_topic: "NodeMCU1/SuhuInt/Temperature"
   qos: 0
   unit_of_measurement: "ºC"
-
+- platform: mqtt
+  name: "Suhu Dapur"
+  state_topic: "tele/sw_dapur/SENSOR"
+  value_template: "{{ value_json.DS18B20.Temperature }}"
+  qos: 0
+  unit_of_measurement: "ºC"
 - platform: mqtt
   name: "Humidity"
   state_topic: "NodeMCU1/SuhuInt/Humidity"
   qos: 0
   unit_of_measurement: "%"
+- platform: mqtt
+  name: "Ambient Light"
+  state_topic: "NodeMCU1/AmbientLight/Lux"
+  qos: 0
+  unit_of_measurement: "Lux"
 - platform: template
   sensors:
     template_last_motion:
       friendly_name: 'Last Motion'
       value_template: >
-        {%- set sensors = [states.binary_sensor.teras, states.binary_sensor.ruang_tamu, states.binary_sensor.pintu_utama, states.binary_sensor.pintu_dapur, states.binary_sensor.pintu_ruang_makan] %}
+        {%- set sensors = [states.binary_sensor.dapur,states.binary_sensor.ruang_cuci, states.binary_sensor.teras, states.binary_sensor.ruang_tamu, states.binary_sensor.pintu_utama, states.binary_sensor.pintu_dapur, states.binary_sensor.pintu_ruang_makan] %}
         {% for sensor in sensors %}
           {% if as_timestamp(sensor.last_changed) == as_timestamp(sensors | map(attribute='last_changed') | max) %}
             {{ sensor.name }}
           {% endif %}
         {% endfor %}
+#
+#
+#  Almanac Sensors
+#
+#
+- platform: template
+  sensors:
+    floorplan_date:
+      friendly_name: 'Formatted Date'
+      value_template: "{{now().strftime('%A, %d %b %Y') }}"
+      # nextsunrise:
+       # friendly_name: 'Next Sunrise'
+       # value_template: "{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom('%D %-I:%M %P') }}"
+
+     # nextsunset:
+       # friendly_name: 'Next Sunset'
+       # value_template: "{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom('%D %-I:%M %P') }}"
+       
+     # dayofyear:
+       # friendly_name: 'Day Number'
+       # value_template: "{{ now().strftime('%j') }}"
+
+
 # - platform: wunderground
 #   api_key: !secret wu_api_key
 #   monitored_conditions:

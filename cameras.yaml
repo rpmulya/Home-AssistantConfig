@@ -1,0 +1,10 @@
+# - platform: onvif
+#   name: Kolam Onvif
+#   host: 192.168.36.28
+#   port: 8080
+#   username: !secret camuser
+#   password: !secret campwd
+#   stream_auth: True
+- platform: ffmpeg
+  input: !secret cam_kolam
+  name: Kolam

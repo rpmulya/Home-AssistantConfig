@@ -70,7 +70,8 @@ mqtt:
 conversation:
 # config recorder #monitor db size
 recorder:
-  purge_days: 1
+  purge_days: 3
+  db_url: !secret db
   include:
     domains:
       - sensor
@@ -81,42 +82,17 @@ recorder:
       - group.awesome_people
   exclude:
     entities:
-      - sensor.average_load_15m
+      # - sensor.average_load_15m
       - sensor.average_load_1m
-      - sensor.average_load_5m
-      - sensor.cpu_use
+      # - sensor.average_load_5m
+      # - sensor.cpu_use
+      # - sensor.disk_use_
+      # - sensor.last_boot
+      #- sensor.ram_free
       - sensor.date
+      - sensor.floorplan_date
       - sensor.date__time
-      - sensor.disk_use_
-      - sensor.last_boot
       - sensor.moon
-      - sensor.pws_alerts
-      - sensor.pws_feelslike_c
-      - sensor.pws_heat_index_c
-      - sensor.pws_observation_time
-      - sensor.pws_precip_1d_mm
-      - sensor.pws_precip_today_metric
-      - sensor.pws_pressure_mb
-      - sensor.pws_relative_humidity
-      - sensor.pws_solarradiation
-      - sensor.pws_temp_c
-      - sensor.pws_temp_high_1d_c
-      - sensor.pws_temp_low_1d_c
-      - sensor.pws_uv
-      - sensor.pws_visibility_km
-      - sensor.pws_weather
-      - sensor.pws_weather_1d_metric
-      - sensor.pws_weather_1n_metric
-      - sensor.pws_weather_2d_metric
-      - sensor.pws_weather_2n_metric
-      - sensor.pws_weather_3d_metric
-      - sensor.pws_weather_3n_metric
-      - sensor.pws_weather_4d_metric
-      - sensor.pws_weather_4n_metric
-      - sensor.pws_wind_dir
-      - sensor.pws_wind_gust_1d_kph
-      - sensor.pws_wind_gust_kph
-      - sensor.ram_free
       - sensor.time
       - sun.sun
 
@@ -125,13 +101,15 @@ history:
 
 # View all events in a logbook
 logbook:
+  
+# Jangan lupa disable
+# logger:
+#   logs:
+#     homeassistant.components.camera: debug
+#     custom_components.camera.onvif: debug
 
 # Track the sun
 sun:
-
-# Weather Prediction
-#sensor:
-#  platform: yr
 
 #Sensors
 # Text to speech
@@ -145,6 +123,12 @@ telegram_bot:
     allowed_chat_ids:
       - !secret rpmEdge_chat_id
 
+# FFMpeg compiled and installed
+ffmpeg:
+  ffmpeg_bin: /usr/local/bin/ffmpeg
+  run_test: true
+
+camera: !include cameras.yaml
 alarm_control_panel: !include alarm.yaml
 panel_custom: !include panel_custom.yaml
 binary_sensor: !include binary_sensors.yaml
