@@ -2,14 +2,14 @@
   alias: Kitchen lights on/off based on motion
   trigger:
     - platform: state
-      entity_id: binary_sensor.dapur
+      entity_id: group.motion_dapur
       to: 'on'
     - platform: state
-      entity_id: binary_sensor.dapur
+      entity_id: group.motion_dapur
       to: 'off'
       for:
         minutes: 1
-        seconds: 1
+        seconds: 30
   condition:
     - condition: numeric_state
       entity_id: sensor.ambient_light

@@ -66,6 +66,10 @@ internal_lights:
   view: false
   entities:
   - light.lampu_dapur
+  - light.lampu_rpm
+  - light.lampu_dining
+  - light.lampu_eyang
+  - light.lampu_danisha
 motion_detectors:
   name: Motion Detectors
   view: false
@@ -73,7 +77,15 @@ motion_detectors:
   - binary_sensor.teras
   - binary_sensor.ruang_tamu
   - binary_sensor.ruang_cuci
+  - binary_sensor.ruang_makan
   - binary_sensor.dapur
+  # - binary_sensor.dapur_belakang
+motion_dapur:
+  name: Motion Dapur
+  view: false
+  entities:
+  - binary_sensor.dapur_depan
+  - binary_sensor.dapur_belakang
 openings:
   name: Doors and Windows
   view: false

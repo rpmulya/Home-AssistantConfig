@@ -43,6 +43,10 @@ groups:
        - light.lampu_luar_belakang
        - light.lampu_luar_depan
        - light.lampu_dapur
+       - light.lampu_rpm
+       - light.lampu_dining
+       - light.lampu_eyang
+       - light.lampu_danisha
        # - group.kitchen_lights
        # - group.living_room_lights
     states:
@@ -112,7 +116,12 @@ groups:
       - binary_sensor.teras
       - binary_sensor.ruang_tamu
       - binary_sensor.ruang_cuci
-      - binary_sensor.dapur    
+      - binary_sensor.ruang_makan
+      - binary_sensor.ruang_tv
+      - binary_sensor.eks_garasi
+      - binary_sensor.dapur
+      # - binary_sensor.dapur_belakang
+      # - group.motion_dapur    
     states:
       - state: 'off'
         class: 'info-background'
