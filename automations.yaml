@@ -1,65 +1,170 @@
-- id: DapurAutoLight
-  alias: Kitchen lights on/off based on motion
+- id: AlarmStatus
+  alias: Alarm Status
   trigger:
-    - platform: state
-      entity_id: group.motion_dapur
-      to: 'on'
-    - platform: state
-      entity_id: group.motion_dapur
-      to: 'off'
-      for:
-        minutes: 1
-        seconds: 30
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /alarmstat
+  action:
+  - service: notify.notifyRPM
+    data:
+      title: Alarm
+      message: Alarm {{states.alarm_control_panel.house.state}} dengan trigger terakhir dari sensor {{states.alarm_control_panel.house.attributes.changed_by}}. Gerakan terakhir terdeteksi di {{states.sensor.template_last_motion.state}} pada {{states.sensor.template_last_motion.last_updated}} atau {{(as_timestamp(now())-as_timestamp(states.sensor.template_last_motion.last_updated)) | int /60}} menit yang lalu
+- id: ArmAway
+  alias: Alarm Arm Away
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /armaway
+  action:
+  - service: alarm_control_panel.alarm_arm_away
+    data:
+      entity_id: alarm_control_panel.house
+  - service: notify.notifyRPM
+    data:
+      title: Alarm
+      message: Alarm armed away
+- id: ArmHome
+  alias: Alarm Arm Home
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /armhome
+  action:
+  - service: alarm_control_panel.alarm_arm_home
+    data:
+      entity_id: alarm_control_panel.house
+  - service: notify.notifyRPM
+    data:
+      title: Alarm
+      message: Alarm armed home
+- id: AlarmDisarm
+  alias: Alarm Disarm
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /disarm
+  action:
+  - service: alarm_control_panel.alarm_disarm
+    data:
+      entity_id: alarm_control_panel.house
+  - service: notify.notifyRPM
+    data:
+      title: Alarm
+      message: Alarm disarmed
+- id: TurnOffDiningRoom
+  alias: Turn Off Dining Room Light
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  action:
+  - service: homeassistant.turn_off
+    entity_id:
+    - light.dining
+- id: TurnOnTahajudLight
+  alias: Turn On Tahajud light
+  trigger:
+  - platform: time
+    at: 02:00:00
   condition:
-    - condition: numeric_state
-      entity_id: sensor.ambient_light
-      below: '2'
+  - condition: state
+    entity_id: device_tracker.90187c1b4a88
+    state: home
   action:
-    service_template: >
-      {% if trigger.to_state.state == "on" %}
-      homeassistant.turn_on
-      {% elif trigger.to_state.state == "off" %}
-      homeassistant.turn_off
-      {% endif %}
-    entity_id: light.lampu_dapur
-- id: SunsetLightOn
-  alias: Turn on light when sun sets
-  initial_state: true
-  hide_entity: false
+  - service: homeassistant.turn_on
+    entity_id:
+    - light.eyang
+    data:
+      transition: 180
+      brightness: 255
+      color_name: white
+- id: TurnOnInternalLight
+  alias: Turn On Room light
   trigger:
-    platform: sun
+  - platform: time
+    at: 02:00:00
+  condition:
+  - condition: state
+    entity_id: device_tracker.90187c1b4a88
+    state: home
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+    - light.eyang
+- id: WakeUpRPM
+  alias: Wake Me Up
+  trigger:
+  - platform: time
+    at: 05:15:00
+  condition:
+  - condition: state
+    entity_id: device_tracker.nyamuk_rpmedge
+    state: home
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+    - light.rpm
+    data:
+      transition: 180
+      brightness: 255
+      color_name: white
+- id: GoToSleepRPM
+  alias: Time To Sleep
+  trigger:
+  - platform: state
+    entity_id: input_boolean.turn_off_light
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: device_tracker.nyamuk_rpmedge
+    state: home
+  action:
+  - service: homeassistant.turn_off
+    entity_id:
+    - light.rpm
+    data:
+      transition: 180
+- id: DarkTheme
+  alias: Turn On Dark Theme
+  trigger:
+  - entity_id: input_boolean.dark_theme
+    platform: state
+    to: 'on'
+  action:
+  - service: frontend.set_theme
+    data:
+      name: midnight
+- id: DefaultTheme
+  alias: Turn Off Default Theme
+  trigger:
+  - entity_id: input_boolean.dark_theme
+    platform: state
+    to: 'off'
+  action:
+  - service: frontend.set_theme
+    data:
+      name: default
+- id: DarkThemeAuto
+  alias: Turn On Dark Theme at Sunset
+  trigger:
+  - platform: sun
     event: sunset
-    offset: -00:10:00
   action:
-  - service: light.turn_on
-    entity_id: group.external_lights
-  - service: notify.notifyRPM
+  - service: frontend.set_theme
     data:
-      title: Sunset
-      message: Lampu dihidupkan
-  - service: notify.notifyHtml5
-    data:
-      title: Sunset
-      message: Lampu luar dihidupkan
-- id: SunriseLightOff
-  alias: Turn off light when sun rises
-  initial_state: true
-  hide_entity: false
+      name: midnight
+- id: DefaultThemeAuto
+  alias: Turn Off Dark Theme at Sunset
   trigger:
-    platform: sun
+  - platform: sun
     event: sunrise
-    offset: -00:15:00
   action:
-  - service: light.turn_off
-    entity_id: group.external_lights
-  - service: notify.notifyRPM
+  - service: frontend.set_theme
     data:
-      title: Sunrise
-      message: Lampu dimatikan
-  - service: notify.notifyHtml5
-    data:
-      title: Sunrise
-      message: Lampu luar dimatikan
+      name: default
 - id: PingPongBot
   alias: Ping Pong Bot
   trigger:
@@ -94,17 +199,6 @@
     data:
       title: Alarm Triggered
       message: Trigger dari sensor {{states.alarm_control_panel.house.attributes.changed_by}}
-- id: SunElevationDark
-  alias: Sun Elevation Dark
-  trigger:
-  - below: '2'
-    entity_id: sun.sun
-    platform: numeric_state
-    value_template: '{{ state.attributes.elevation }}'
-  action:
-  - data:
-      message: Sun elevation at below 2
-    service: notify.notifyHtml5
 - id: UpdateAvailableNotif
   alias: Update Available Notifications
   trigger:

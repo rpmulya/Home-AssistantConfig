@@ -1,27 +1,23 @@
 <dom-module id='ha-panel-alarm'>
-    <style include="ha-style iron-flex iron-flex-factors">
+    <template>
+	    <style include="ha-style iron-flex iron-flex-factors">
       app-header-layout {
         background-color: #E5E5E5;
       }
-
       .content {
         padding: 15px;
       }
-
       ha-label-badge {
         --ha-label-badge-color: rgb(223, 76, 30);
       }
-
       :host ::content .badge-container.ha-label-badge {
         margin: 0px 12px;
       }
-
       .actions {
         margin-left: 20px;
         min-width: 200px;
         @apply(--layout-self-center);
       }
-
       .box {
         max-width: 350px;
         margin-bottom: 10px;
@@ -31,34 +27,27 @@
         @apply(--shadow-elevation-4dp);
         opacity: var(--dark-primary-opacity);
       }
-
       .title {
         @apply(--paper-font-headline);
         margin: 10px;
       }
-
       .summary {
         margin: 15px auto 0px;
         text-align: center;
       } 
-
       .oksign {
         color: green;
       }
-
       .badsign {
         color: red;
       }
-
       .tappable {
         cursor: pointer;
         margin-top: 2px;
         font-size: 1.2em;
       }
-
     </style>
 
-    <template>
       <app-header-layout has-scrolling-region>
         <app-header slot="header" fixed>
             <app-toolbar>
@@ -129,10 +118,8 @@
 </dom-module>
 
 <script>
-
 Polymer({
   is: 'ha-panel-alarm',
-
   properties: {
     // things that appear in all the other panels 
     hass:     { type: Object },
@@ -148,10 +135,8 @@ Polymer({
     // Hold our unobservers
     cleanup:    { type: Array, value: [] },
   },
-
   // Polymer observers definition
   observers: [ 'onPanelUpdate(hass, panel)' ],
-
   wtf: function (e) { debugger; return e; },
   // Helpers to figure out what to display 
   isdisarmed:  function(alarm) { return alarm.state == "disarmed"; },
@@ -160,11 +145,10 @@ Polymer({
     ret = all.filter(function (e) { return ['on', 'open', 'detected', 'unlocked'].indexOf(e.state) > -1; }); 
     return ret;
   },
-
   computeSensors: function(hass, ids) {
+    //if (!ids) return 'kenape ya?'; 
     return ids.map(function (key) { return hass.states[key]; }).filter(function (e) { return e != undefined; });
   },
-
   computeIcon: function (state) {
      switch (state) {
         case 'disarmed':   return 'mdi:shield-outline';
@@ -176,7 +160,6 @@ Polymer({
      }
      return 'mdi:help';
   },
-
   computeLabel: function (state) {
      switch (state) {
         case 'disarmed':   return 'off';
@@ -188,25 +171,20 @@ Polymer({
      }
      return state;
   },
-
   // Responding to user inputs
   callService: function(ev) {
     ev.stopPropagation();
     var call = ev.target.getAttribute('data-call');
     this.hass.callService('alarm_control_panel', call, {'entity_id': this.alarm.entityId})
   },
-
   entityTapped: function (ev) {
     ev.stopPropagation();
     var entityId = ev.target.getAttribute('data-entity');
     this.fire('hass-more-info', { entityId: entityId });
   },
-
   // Observer: polymer gaurantees that this won't be called util hass and panel are both defined
   onPanelUpdate: function(hass, panel) {
     this.alarm = hass.states[panel.config.alarmid];
   },
-
 });
 </script>
-

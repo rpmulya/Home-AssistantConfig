@@ -34,6 +34,12 @@ resource:
   view: true
   entities:
   - group.server
+playground:
+  name: playground
+  icon: mdi:crop-rotate
+  view: true
+  entities:
+  - group.input_booleans
 server:
   name: Server Utilization
   icon: mdi:laptop-mac
@@ -54,22 +60,23 @@ awesome_people:
   - sensor.rpm
   - device_tracker.34a395c33c50
   - device_tracker.205ef7734ec8
-  - device_tracker.00376de2226f
+  - device_tracker.40786a14bba7
 external_lights:
   name: External Lights
   view: false
   entities:
-  - light.lampu_luar_belakang
-  - light.lampu_luar_depan
+  - light.belakang
+  - light.depan
 internal_lights:
   name: Internal Lights
   view: false
   entities:
-  - light.lampu_dapur
-  - light.lampu_rpm
-  - light.lampu_dining
-  - light.lampu_eyang
-  - light.lampu_danisha
+  - light.dapur
+  - light.rpm
+  - light.dining
+  - light.eyang
+  - light.tamu
+  - light.garasi
 motion_detectors:
   name: Motion Detectors
   view: false
@@ -79,13 +86,16 @@ motion_detectors:
   - binary_sensor.ruang_cuci
   - binary_sensor.ruang_makan
   - binary_sensor.dapur
+  - binary_sensor.garasi
   # - binary_sensor.dapur_belakang
-motion_dapur:
-  name: Motion Dapur
+input_booleans:
+  name: Input
   view: false
   entities:
-  - binary_sensor.dapur_depan
-  - binary_sensor.dapur_belakang
+  - input_boolean.dark_theme
+  - input_boolean.turn_on_light
+  - input_boolean.turn_off_light
+  - input_slider.rpm_brightness
 openings:
   name: Doors and Windows
   view: false

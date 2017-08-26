@@ -1,0 +1,49 @@
+- name: Sunset Home
+  entities:
+    light.depan: on
+    light.belakang: on
+    light.eyang: on
+    light.dining: on
+- name: Sunrise Home
+  entities:
+    light.depan: off
+    light.belakang: off
+    light.eyang: off
+    light.dining: off
+    light.rpm: off
+- name: Sunset Away
+  entities:
+    light.depan: on
+    light.belakang: on
+- name: Sunrise Away
+  entities:
+    light.depan: off
+    light.belakang: off
+- name: Dark Day On
+  entities:
+    # light.depan: on
+    # light.belakang: on
+    light.eyang: on
+    light.dining: on
+    light.rpm: on
+    light.tamu: on
+    light.depan: on
+    light.belakang: on
+- name: Dark Day Off
+  entities:
+    # light.depan: off
+    # light.belakang: off
+    light.eyang: off
+    light.dining: off
+    light.rpm: off
+    light.tamu: off
+    light.depan: off
+    light.belakang: off
+# - name: Movies
+#   entities:
+#     light.tv_back_light:
+#       state: on
+#       brightness: 100
+#     light.ceiling: off
+#     media_player.sony_bravia_tv:
+#       source: HDMI 1

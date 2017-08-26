@@ -172,7 +172,6 @@ class BWAlarm(alarm.AlarmControlPanel):
              armed(h/a)      trig    warn     X       X        X      dis    trig
              warning(T1)      X       X      trig     X        X      dis    trig
              triggered(T2)    X       X      last     X        X      dis     *
-
            As the only non-timed states are disarmed, armed_home and armed_away,
            they are the only ones we can return to after an alarm.
         """
@@ -232,5 +231,3 @@ class BWAlarm(alarm.AlarmControlPanel):
 
             # Let HA know that something changed
             self.schedule_update_ha_state()
-
-

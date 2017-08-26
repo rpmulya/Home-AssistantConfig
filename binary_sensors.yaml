@@ -13,6 +13,13 @@
   payload_on: "ON"
   payload_off: "OFF"
 - platform: mqtt
+  state_topic: "cmnd/motion_garasi/POWER1"
+  name: "Garasi"
+  device_class: motion
+  qos: 0
+  payload_on: "ON"
+  payload_off: "OFF"
+- platform: mqtt
   state_topic: "NodeMCU1/Motion1/Status"
   name: "Ruang Tamu"
   device_class: motion

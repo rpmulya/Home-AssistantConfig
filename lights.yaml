@@ -1,5 +1,9 @@
+- platform: hue
+  host: 192.168.36.5
+  allow_unreachable: true
+  allow_hue_groups: true
 - platform: mqtt
-  name: "Lampu Luar Belakang"
+  name: "Belakang"
   state_topic: "stat/sw_ext_back/POWER"
   command_topic: "cmnd/sw_ext_back/POWER"
   payload_on: "ON"
@@ -7,7 +11,7 @@
   qos: 1
   retain: true
 - platform: mqtt
-  name: "Lampu Luar Depan"
+  name: "Depan"
   state_topic: "stat/sw_ext_front/POWER"
   command_topic: "cmnd/sw_ext_front/POWER"
   payload_on: "ON"
@@ -15,9 +19,17 @@
   qos: 1
   retain: true
 - platform: mqtt
-  name: "Lampu Dapur"
+  name: "Dapur"
   state_topic: "stat/sw_dapur/POWER"
   command_topic: "cmnd/sw_dapur/POWER"
+  payload_on: "ON"
+  payload_off: "OFF"
+  qos: 1
+  retain: true
+- platform: mqtt
+  name: "Garasi"
+  state_topic: "stat/sw_garasi/POWER"
+  command_topic: "cmnd/sw_garasi/POWER"
   payload_on: "ON"
   payload_off: "OFF"
   qos: 1

@@ -15,7 +15,8 @@ immediate:
     - binary_sensor.ruang_makan
     - binary_sensor.ruang_tamu
     - binary_sensor.ruang_cuci
-    - group.motion_dapur
+    - binary_sensor.dapur
+    - binary_sensor.garasi
 delayed:
     - binary_sensor.teras
 notathome:

@@ -1,0 +1,12 @@
+turn_on_light:
+  name: Turn On Light
+  initial: off
+  icon: mdi:debug-step-into
+turn_off_light:
+  name: Turn Off Light
+  initial: off
+  icon: mdi:debug-step-out
+dark_theme:
+  name: Turn On Dark dark_theme
+  initial: off
+  icon: mdi:auto-fix

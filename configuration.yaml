@@ -20,6 +20,7 @@ ios:
 
 # Enables the frontend
 frontend:
+  themes: !include themes.yaml    
 
 # Enables configuration UI
 config:
@@ -128,6 +129,10 @@ ffmpeg:
   ffmpeg_bin: /usr/local/bin/ffmpeg
   run_test: true
 
+scene: !include scenes.yaml
+input_boolean: !include input_boolean.yaml
+input_slider: !include input_slider.yaml
+script: !include scripts.yaml
 camera: !include cameras.yaml
 alarm_control_panel: !include alarm.yaml
 panel_custom: !include panel_custom.yaml
