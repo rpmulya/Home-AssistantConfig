@@ -1,60 +1,61 @@
-<dom-module id='ha-panel-alarm'>
-    <template>
-	    <style include="ha-style iron-flex iron-flex-factors">
-      app-header-layout {
-        background-color: #E5E5E5;
-      }
-      .content {
-        padding: 15px;
-      }
-      ha-label-badge {
-        --ha-label-badge-color: rgb(223, 76, 30);
-      }
-      :host ::content .badge-container.ha-label-badge {
-        margin: 0px 12px;
-      }
-      .actions {
-        margin-left: 20px;
-        min-width: 200px;
-        @apply(--layout-self-center);
-      }
-      .box {
-        max-width: 350px;
-        margin-bottom: 10px;
-        padding: 15px;
-        background-color: white;
-        border-radius: 3px;
-        @apply(--shadow-elevation-4dp);
-        opacity: var(--dark-primary-opacity);
-      }
-      .title {
-        @apply(--paper-font-headline);
-        margin: 10px;
-      }
-      .summary {
-        margin: 15px auto 0px;
-        text-align: center;
-      } 
-      .oksign {
-        color: green;
-      }
-      .badsign {
-        color: red;
-      }
-      .tappable {
-        cursor: pointer;
-        margin-top: 2px;
-        font-size: 1.2em;
-      }
-    </style>
-
-      <app-header-layout has-scrolling-region>
-        <app-header slot="header" fixed>
-            <app-toolbar>
-                <ha-menu-button narrow='[[narrow]]' show-menu='[[showMenu]]'></ha-menu-button>
-                <div main-title>Alarm</div>
-            </app-toolbar>
-        </app-header>
+<dom-module id='ha-panel-alarm'>  
+	<template>
+		<style include="ha-style iron-flex iron-flex-factors">
+		  app-header-layout {
+			background-color: #E5E5E5;
+		  }
+		  
+		  #container ::slotted(.content) {
+			padding: 15px;
+		  }
+		  ha-label-badge {
+			--ha-label-badge-color: rgb(223, 76, 30);
+		  }
+		  :host ::slotted(.badge-container.ha-label-badge) {
+			margin: 0px 12px;
+		  }
+		  .actions {
+			margin-left: 20px;
+			min-width: 200px;
+			@apply(--layout-self-center);
+		  }
+		  .box {
+			max-width: 350px;
+			margin-bottom: 10px;
+			padding: 15px;
+			background-color: white;
+			border-radius: 3px;
+			@apply(--shadow-elevation-4dp);
+			opacity: var(--dark-primary-opacity);
+		  }
+		  .title {
+			#@apply(--paper-font-headline);
+			margin: 10px;
+		  }
+		  
+		  .summary {
+			margin: 15px auto 0px;
+			text-align: center;
+		  } 
+		  .oksign {
+			color: green;
+		  }
+		  .badsign {
+			color: red;
+		  }
+		  .tappable {
+			cursor: pointer;
+			margin-top: 2px;
+			font-size: 1.2em;
+		  }
+		</style>
+		  <app-header-layout has-scrolling-region>
+			<app-header slot="header" fixed>
+				<app-toolbar>
+					<ha-menu-button narrow='[[narrow]]' show-menu='[[showMenu]]'></ha-menu-button>
+					<div main-title>Alarm</div>
+				</app-toolbar>
+			</app-header>
 
       <div class='content'>
         <div class='box horizontal layout'>
@@ -142,12 +143,20 @@ Polymer({
   isdisarmed:  function(alarm) { return alarm.state == "disarmed"; },
   issecure:    function(all)   { return this.opensensors(all).length == 0; },
   opensensors: function(all)   { 
-    ret = all.filter(function (e) { return ['on', 'open', 'detected', 'unlocked'].indexOf(e.state) > -1; }); 
-    return ret;
+	if (all == false) {
+		return false;
+	} else {
+		ret = all.filter(function (e) { return ['on', 'open', 'detected', 'unlocked'].indexOf(e.state) > -1; }); 
+		return ret;
+	}
   },
   computeSensors: function(hass, ids) {
-    //if (!ids) return 'kenape ya?'; 
-    return ids.map(function (key) { return hass.states[key]; }).filter(function (e) { return e != undefined; });
+	if (ids == undefined) {
+		// Control the exception when this.alarm is not ready
+		return false;
+	} else {
+		return ids.map(function (key) { return hass.states[key]; }).filter(function (e) { return e != undefined; });
+	}
   },
   computeIcon: function (state) {
      switch (state) {
@@ -184,7 +193,9 @@ Polymer({
   },
   // Observer: polymer gaurantees that this won't be called util hass and panel are both defined
   onPanelUpdate: function(hass, panel) {
+	//console.log('onPanelUpdate');
     this.alarm = hass.states[panel.config.alarmid];
+	//console.log('Alarm is ', this.alarm);
   },
 });
 </script>

@@ -20,14 +20,10 @@ climate:
 automation:
   name: Automation
   icon: mdi:flash-auto
-  view: true
+  view: false
   entities:
   - automation.update_available_notifications
   - automation.ping_pong_bot
-  - automation.turn_on_light_when_sun_sets
-  - automation.turn_off_light_when_sun_rises
-  - automation.SunElevationDark
-  - automation.kitchen_lights_onoff_based_on_motion
 resource:
   name: Resource
   icon: mdi:desktop-tower
@@ -52,6 +48,7 @@ server:
   - sensor.average_load_5m
   - sensor.average_load_15m
   - sensor.last_boot
+  - sensor.ssl_certificate_expiry
 awesome_people:
   name: 36ers
   view: false
@@ -65,8 +62,8 @@ external_lights:
   name: External Lights
   view: false
   entities:
-  - light.belakang
   - light.depan
+  - light.belakang
 internal_lights:
   name: Internal Lights
   view: false

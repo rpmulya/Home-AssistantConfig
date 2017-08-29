@@ -19,6 +19,8 @@
   origin: device_tracker.nyamuk_rpmedge
   options: street, city
   # display_zone: hide
+- platform: cert_expiry
+  host: 36ha.duckdns.org
 - platform: mqtt
   name: "Suhu Ruang TV"
   state_topic: "NodeMCU1/SuhuInt/Temperature"

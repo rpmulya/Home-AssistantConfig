@@ -55,15 +55,7 @@
     data:
       title: Alarm
       message: Alarm disarmed
-- id: TurnOffDiningRoom
-  alias: Turn Off Dining Room Light
-  trigger:
-  - platform: time
-    at: '22:00:00'
-  action:
-  - service: homeassistant.turn_off
-    entity_id:
-    - light.dining
+
 - id: TurnOnTahajudLight
   alias: Turn On Tahajud light
   trigger:
@@ -81,19 +73,6 @@
       transition: 180
       brightness: 255
       color_name: white
-- id: TurnOnInternalLight
-  alias: Turn On Room light
-  trigger:
-  - platform: time
-    at: 02:00:00
-  condition:
-  - condition: state
-    entity_id: device_tracker.90187c1b4a88
-    state: home
-  action:
-  - service: homeassistant.turn_on
-    entity_id:
-    - light.eyang
 - id: WakeUpRPM
   alias: Wake Me Up
   trigger:
