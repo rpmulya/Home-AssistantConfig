@@ -42,7 +42,6 @@ class Events(enum.Enum):
 PLATFORM_SCHEMA = vol.Schema({
     vol.Required(CONF_PLATFORM):  'bwalarm',
     vol.Required(CONF_NAME):      cv.string,
-    vol.Optional(CONF_CODE): cv.string,
     vol.Required(CONF_PENDING_TIME): vol.All(vol.Coerce(int), vol.Range(min=0)),
     vol.Required(CONF_TRIGGER_TIME): vol.All(vol.Coerce(int), vol.Range(min=1)),
     vol.Required(CONF_ALARM):     cv.entity_id,  # switch/group to turn on when alarming
@@ -69,7 +68,6 @@ class BWAlarm(alarm.AlarmControlPanel):
         """ Initalize the alarm system """
         self._hass         = hass
         self._name         = config[CONF_NAME]
-        self._code         = str(config[CONF_CODE]) if config.get(CONF_CODE) else None
         self._immediate    = set(config.get(CONF_IMMEDIATE, []))
         self._delayed      = set(config.get(CONF_DELAYED, []))
         self._notathome    = set(config.get(CONF_NOTATHOME, []))
@@ -87,10 +85,7 @@ class BWAlarm(alarm.AlarmControlPanel):
         self.clearsignals()
 
     ### Alarm properties
-    @property
-    def code_format(self):
-        """One or more characters."""
-        return None if self._code is None else '.+'
+
     @property
     def should_poll(self) -> bool: return False
     @property
@@ -133,32 +128,17 @@ class BWAlarm(alarm.AlarmControlPanel):
             self.process_event(Events.DelayedTrip)
 
     def alarm_disarm(self, code=None):
-        """Send disarm command."""
-        if not self._validate_code(code, STATE_ALARM_DISARMED):
-            return
         self.process_event(Events.Disarm)
 
     def alarm_arm_home(self, code=None):
-        """Send arm home command."""
-        if not self._validate_code(code, STATE_ALARM_ARMED_HOME):
-            return
         self.process_event(Events.ArmHome)
 
     def alarm_arm_away(self, code=None):
-        """Send arm away command."""
-        if not self._validate_code(code, STATE_ALARM_ARMED_AWAY):
-            return
         self.process_event(Events.ArmAway)
 
     def alarm_trigger(self, code=None):
         self.process_event(Events.Trigger)
 
-    def _validate_code(self, code, state):
-        """Validate given code."""
-        check = self._code is None or code == self._code
-        if not check:
-            _LOGGER.warning("Invalid code given for %s", state)
-        return check
 
     ### Internal processing
 

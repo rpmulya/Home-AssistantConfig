@@ -1,5 +1,6 @@
 platform: bwalarm
 name: House
+code: 2279
 pending_time: 30
 trigger_time: 600
 alarm: automations.alarm_triggered
