@@ -59,10 +59,10 @@
 
       <div class='content'>
         <div class='box horizontal layout'>
-          <div class='box vertical layout'>
+          <div class='vertical layout'>
             <ha-label-badge icon='[[computeIcon(alarm.state)]]' label='[[computeLabel(alarm.state)]]' description='[[alarm.entityDisplay]]'></ha-label-badge>
 
-            <paper-input class="middle" style="width:4em" label="code" id="code" type="password" tabindex="0" aria-disabled="false" style="" focused=""></paper-input>
+            <paper-input style="width:5em" label="code" id="code" type="password" tabindex="0" aria-disabled="false" style="" focused=""></paper-input>
           </div>  
           <div class='actions'>
             <template is='dom-if' if='[[isdisarmed(alarm)]]'>
@@ -198,7 +198,7 @@ Polymer({
   onPanelUpdate: function(hass, panel) {
 	//console.log('onPanelUpdate');
     this.alarm = hass.states[panel.config.alarmid];
-    this.$.code.value = '';
+    // this.$.code.value = '';
 	//console.log('Alarm is ', this.alarm);
   },
 });

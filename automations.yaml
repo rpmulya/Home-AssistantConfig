@@ -1,3 +1,23 @@
+- id: forward_persistent_notifications
+  alias: Forward Persistent Notifications
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: call_service
+    event_data:
+      domain: persistent_notification
+      service: create
+  action:
+  - service: notify.notifyRPM
+    data_template:
+      message: >-
+        {% set message = trigger.event.data.service_data.message %}
+        {% if 'invalid authentication' in message or 'login attempts' in message %}
+          {{ message }}: http://www.ip-tracker.org/locator/ip-lookup.php?ip={{ message.split('from ')[1] }}
+        {% else %}
+          {{ message }}
+        {% endif %}
+
 - id: AlarmStatus
   alias: Alarm Status
   trigger:
