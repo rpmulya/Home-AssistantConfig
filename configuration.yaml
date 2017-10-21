@@ -132,7 +132,7 @@ ffmpeg:
 
 scene: !include scenes.yaml
 input_boolean: !include input_boolean.yaml
-input_slider: !include input_slider.yaml
+input_number: !include input_number.yaml
 script: !include scripts.yaml
 camera: !include cameras.yaml
 alarm_control_panel: !include alarm.yaml
