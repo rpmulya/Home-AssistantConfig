@@ -27,6 +27,7 @@
     light.dining: on
     light.rpm: on
     light.tamu: on
+    light.garasi: on
     light.depan: on
     light.belakang: on
 - name: Dark Day Off
@@ -37,6 +38,7 @@
     light.dining: off
     light.rpm: off
     light.tamu: off
+    light.garasi: off
     light.depan: off
     light.belakang: off
 # - name: Movies

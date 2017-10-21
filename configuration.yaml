@@ -71,7 +71,8 @@ mqtt:
 conversation:
 # config recorder #monitor db size
 recorder:
-  purge_days: 3
+  purge_interval: 2
+  purge_keep_days: 5
   db_url: !secret db
   include:
     domains:
