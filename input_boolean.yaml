@@ -1,3 +1,7 @@
+motion_light:
+  name: Motion Detection Lighting
+  initial: on
+  icon: mdi:debug-step-into
 turn_on_light:
   name: Turn On Light
   initial: off

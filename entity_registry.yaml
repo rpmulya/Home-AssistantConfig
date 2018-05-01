@@ -1,0 +1,28 @@
+sensor.rpmiphone_battery_state:
+  name:
+  platform: ios
+  unique_id: state_rpm_iphone
+sensor.rpmiphone_battery_level:
+  name:
+  platform: ios
+  unique_id: level_rpm_iphone
+light.tamu:
+  name:
+  platform: hue
+  unique_id: 00:17:88:01:02:20:1a:6c-0b
+light.rpm:
+  name:
+  platform: hue
+  unique_id: 00:17:88:01:02:5d:79:74-0b
+light.eyang_2:
+  name:
+  platform: hue
+  unique_id: 00:17:88:01:02:5f:ea:03-0b
+light.dining:
+  name:
+  platform: hue
+  unique_id: 00:17:88:01:02:5d:78:7c-0b
+media_player.ruang_tv:
+  name:
+  platform: cast
+  unique_id: 4b9e1605-6944-3550-be09-c78f23c10c3f

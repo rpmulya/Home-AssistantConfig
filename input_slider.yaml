@@ -1,7 +1,0 @@
-rpm_brightness:
-  name: Brightness
-  icon: mdi:creation
-  initial: 10
-  min: 0
-  max: 254
-  step: 10

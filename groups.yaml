@@ -41,12 +41,12 @@ server:
   icon: mdi:laptop-mac
   view: false
   entities:
-  - sensor.cpu_use
-  - sensor.ram_free
+  - sensor.processor_use
+  - sensor.memory_free
   - sensor.disk_use
-  - sensor.average_load_1m
-  - sensor.average_load_5m
-  - sensor.average_load_15m
+  - sensor.load_1m
+  - sensor.load_5m
+  - sensor.load_15m
   - sensor.last_boot
   - sensor.ssl_certificate_expiry
 awesome_people:
@@ -89,6 +89,7 @@ input_booleans:
   name: Input
   view: false
   entities:
+  - input_boolean.motion_light
   - input_boolean.dark_theme
   - input_boolean.turn_on_light
   - input_boolean.turn_off_light

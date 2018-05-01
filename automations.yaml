@@ -10,26 +10,30 @@
   action:
   - service: notify.notifyRPM
     data_template:
-      message: >-
-        {% set message = trigger.event.data.service_data.message %}
-        {% if 'invalid authentication' in message or 'login attempts' in message %}
-          {{ message }}: http://www.ip-tracker.org/locator/ip-lookup.php?ip={{ message.split('from ')[1] }}
-        {% else %}
-          {{ message }}
-        {% endif %}
-
+      message: "{% set message = trigger.event.data.service_data.message %} {% if\
+        \ 'invalid authentication' in message or 'login attempts' in message %}\n\
+        \  {{ message }}: http://www.ip-tracker.org/locator/ip-lookup.php?ip={{ message.split('from\
+        \ ')[1] }}\n{% else %}\n  {{ message }}\n{% endif %}"
 - id: AlarmStatus
   alias: Alarm Status
   trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
+  - event_data:
       command: /alarmstat
+    event_type: telegram_command
+    platform: event
+  condition:
+  - condition: state
+    entity_id: group.input_booleans
+    state: 'On'
   action:
-  - service: notify.notifyRPM
-    data:
+  - data:
+      message: Alarm {{states.alarm_control_panel.house.state}} dengan trigger terakhir
+        dari sensor {{states.alarm_control_panel.house.attributes.changed_by}}. Gerakan
+        terakhir terdeteksi di {{states.sensor.template_last_motion.state}} pada {{states.sensor.template_last_motion.last_updated}}
+        atau {{(as_timestamp(now())-as_timestamp(states.sensor.template_last_motion.last_updated))
+        | int /60}} menit yang lalu
       title: Alarm
-      message: Alarm {{states.alarm_control_panel.house.state}} dengan trigger terakhir dari sensor {{states.alarm_control_panel.house.attributes.changed_by}}. Gerakan terakhir terdeteksi di {{states.sensor.template_last_motion.state}} pada {{states.sensor.template_last_motion.last_updated}} atau {{(as_timestamp(now())-as_timestamp(states.sensor.template_last_motion.last_updated)) | int /60}} menit yang lalu
+    service: notify.notifyRPM
 - id: ArmAway
   alias: Alarm Arm Away
   trigger:
@@ -75,7 +79,6 @@
     data:
       title: Alarm
       message: Alarm disarmed
-
 - id: TurnOnTahajudLight
   alias: Turn On Tahajud light
   trigger:
@@ -89,6 +92,24 @@
   - service: homeassistant.turn_on
     entity_id:
     - light.eyang
+    data:
+      transition: 180
+      brightness: 255
+      color_name: white
+- id: RPMhome
+  alias: I am home
+  trigger:
+  - platform: state
+    entity_id: device_tracker.nyamuk_rpmedge
+    from: not_home
+    to: home
+  condition:
+  - condition: sun
+    after: sunset
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+    - light.rpm
     data:
       transition: 180
       brightness: 255
@@ -167,15 +188,19 @@
 - id: PingPongBot
   alias: Ping Pong Bot
   trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
+  - event_data:
       command: /ping
+    event_type: telegram_command
+    platform: event
   action:
-  - service: notify.notifyRPM
-    data:
-      title: Yuk
+  - data:
       message: pong
+      title: Yuk
+    service: notify.notifyRPM
+  condition:
+  - condition: state
+    entity_id: group.input_booleans
+    state: 'On'
 - id: AlarmWarn
   alias: Alarm Warning
   trigger:

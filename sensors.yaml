@@ -18,7 +18,9 @@
   name: RPM
   origin: device_tracker.nyamuk_rpmedge
   options: street, city
+  gravatar: rpmulya@gmail.com
   # display_zone: hide
+  api_key: AIzaSyA3gWdvw_WZBdJrBI12dNBISrbSIlPO0Ts
 - platform: cert_expiry
   host: 36ha.duckdns.org
 - platform: mqtt

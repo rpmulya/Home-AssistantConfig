@@ -7,4 +7,4 @@
     sidebar_title: Alarm
     sidebar_icon: mdi:security-home
     config:
-        alarmid: alarm_control_panel.house
+        alarmid: alarm_control_panel.house ## USE THE SAME ID AS USED IN YOUR ALARM.YAML
