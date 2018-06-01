@@ -1,0 +1,99 @@
+# - alias: '[Alarm] Panic Mode'
+#   trigger:
+#     platform: state
+#     entity_id: alarm_control_panel.house
+#     value_template: '{{ state.attributes.panic_mode }}'
+#     to: 'ACTIVE'
+#   action:
+#     service: activate_self_defence_robot
+- id: AlarmStatus
+  alias: Alarm Status
+  trigger:
+  - event_data:
+      command: /alarmstat
+    event_type: telegram_command
+    platform: event
+  condition:
+  - condition: state
+    entity_id: group.input_booleans
+    state: 'On'
+  action:
+  - service: notify.notifyRPM
+    data:
+      message: Alarm {{states.alarm_control_panel.house.state}} dengan trigger terakhir
+        dari sensor {{states.alarm_control_panel.house.attributes.changed_by}}. Gerakan
+        terakhir terdeteksi di {{states.sensor.template_last_motion.state}} pada {{states.sensor.template_last_motion.last_updated}}
+        atau {{(as_timestamp(now())-as_timestamp(states.sensor.template_last_motion.last_updated)) | int /60}} menit yang lalu
+      title: Alarm
+
+- id: ArmAway
+  alias: Alarm Arm Away
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /armaway
+  action:
+  - service: alarm_control_panel.alarm_arm_away
+    data:
+      entity_id: alarm_control_panel.house
+  - service: notify.notifyRPM
+    data:
+      title: Alarm
+      message: Alarm armed away
+- id: ArmHome
+  alias: Alarm Arm Home
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /armhome
+  condition:
+  - condition: state
+    entity_id: group.input_booleans
+    state: 'On'
+  action:
+  - service: alarm_control_panel.alarm_arm_home
+    data:
+      entity_id: alarm_control_panel.house
+  # - service: notify.notifyRPM
+  #   data:
+  #     title: Alarm
+  #     message: Alarm armed home
+- id: AlarmDisarm
+  alias: Alarm Disarm
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /disarm
+  action:
+  - service: alarm_control_panel.alarm_disarm
+    data:
+      entity_id: alarm_control_panel.house
+  - service: notify.notifyRPM
+    data:
+      title: Alarm
+      message: Alarm disarmed
+- id: AlarmWarn
+  alias: Alarm Warning
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: warning
+  action:
+  - data:
+      message: Warning dari sensor {{states.alarm_control_panel.house.attributes.changed_by}}
+      title: Alarm Warning
+    service: notify.notifyRPM
+- id: AlarmOn
+  alias: Alarm Triggered
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.house
+    to: triggered
+  action:
+  - service: notify.notifyRPM
+    data:
+      title: Alarm Triggered
+      message: Trigger dari sensor {{states.alarm_control_panel.house.attributes.changed_by}}

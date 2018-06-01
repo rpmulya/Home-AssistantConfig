@@ -1,0 +1,107 @@
+- id: TurnOnTahajudLight
+  alias: Turn On Tahajud light
+  trigger:
+  - platform: time
+    at: 02:00:00
+  condition:
+  - condition: state
+    entity_id: device_tracker.nyamuk_eyang_owntracks
+    state: 'home'
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+    - light.eyang
+    data:
+      transition: 180
+      brightness: 255
+      color_name: white
+- id: varHomeNotif
+  alias: 36ers arrive home
+  trigger:
+  - platform: state
+    entity_id: variable.eyang_presence
+    to: 'Just Arrived'
+  - platform: state
+    entity_id: variable.rpm_presence
+    to: 'Just Arrived'  
+  - platform: state
+    entity_id: variable.ibu_presence
+    to: 'Just Arrived'  
+  - platform: state
+    entity_id: variable.ayah_presence
+    to: 'Just Arrived'
+  - platform: state
+    entity_id: variable.pakde_presence
+    to: 'Just Arrived'
+  condition:
+  - condition: state
+    entity_id: 'group.awesome_people'
+    state: 'home'
+  action:
+  - service: tts.google_say
+    entity_id:
+    - media_player.family_room_speaker
+    data_template: 
+      message: >
+          {% if trigger.entity_id == 'variable.eyang_presence' %}
+            "eyang pulang"
+          {% elif trigger.entity_id == 'variable.rpm_presence' %}
+            "papa pulang"
+          {% elif trigger.entity_id == 'variable.ibu_presence' %}
+            "ibu pulang"
+          {% elif trigger.entity_id == 'variable.ayah_presence' %}
+            "ayah pulang"
+          {% else %}
+            "pakde pulang"
+          {% endif %}
+- id: RPMhome
+  alias: I am home
+  trigger:
+  - platform: state
+    entity_id: device_tracker.nyamuk_rpmedge
+    from: 'not_home'
+    to: 'home'
+  condition:
+  - condition: sun
+    after: sunset
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+    - light.rpm
+    data:
+      transition: 180
+      brightness: 255
+      color_name: white
+- id: WakeUpRPM
+  alias: Wake Me Up
+  trigger:
+  - platform: time
+    at: 05:15:00
+  condition:
+  - condition: state
+    entity_id: device_tracker.nyamuk_rpmedge
+    state: 'home'
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+    - light.rpm
+    data:
+      transition: 180
+      brightness: 255
+      color_name: white
+- id: GoToSleepRPM
+  alias: Time To Sleep
+  trigger:
+  - platform: state
+    entity_id: input_boolean.turn_off_light
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: device_tracker.nyamuk_rpmedge
+    state: 'home'
+  action:
+  - service: homeassistant.turn_off
+    entity_id:
+    - light.rpm
+    data:
+      transition: 180

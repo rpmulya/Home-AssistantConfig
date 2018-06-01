@@ -1,0 +1,256 @@
+- alias: Mark person as just arrived
+  trigger:
+    - platform: state
+      entity_id: device_tracker.nyamuk_eyang_owntracks
+      from: 'not_home'
+      to: 'home'
+    - platform: state
+      entity_id: device_tracker.nyamuk_rpmedge
+      from: 'not_home'
+      to: 'home'
+    - platform: state
+      entity_id: device_tracker.34a395c33c50
+      from: 'not_home'
+      to: 'home'
+    - platform: state
+      entity_id: device_tracker.205ef7734ec8
+      from: 'not_home'
+      to: 'home'
+    - platform: state
+      entity_id: device_tracker.40786a14bba7
+      from: 'not_home'
+      to: 'home'
+  action:
+    - service: variable.set_variable
+      data_template:
+        variable: >
+          {% if trigger.entity_id == 'device_tracker.nyamuk_eyang_owntracks' %}
+            eyang_presence
+          {% elif trigger.entity_id == 'device_tracker.nyamuk_rpmedge' %}
+            rpm_presence
+          {% elif trigger.entity_id == 'device_tracker.34a395c33c50' %}
+            ibu_presence
+          {% elif trigger.entity_id == 'device_tracker.205ef7734ec8' %}
+            ayah_presence
+          {% else %}
+            pakde_presence
+          {% endif %}
+        value: >
+          {% if trigger.entity_id == 'device_tracker.nyamuk_eyang_owntracks' %}
+            {% if states.variable.eyang_presence.state == 'Just Left' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% elif trigger.entity_id == 'device_tracker.nyamuk_rpmedge' %}
+            {% if states.variable.rpm_presence.state == 'Just Left' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% elif trigger.entity_id == 'device_tracker.34a395c33c50' %}
+            {% if states.variable.ibu_presence.state == 'Just Left' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% elif trigger.entity_id == 'device_tracker.205ef7734ec8' %}
+            {% if states.variable.ayah_presence.state == 'Just Left' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% else %}
+            {% if states.variable.pakde_presence.state == 'Just Left' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% endif %}
+- alias: Mark person as home
+  trigger:
+    - platform: state
+      entity_id: variable.eyang_presence
+      to: 'Just Arrived'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: variable.rpm_presence
+      to: 'Just Arrived'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: variable.ibu_presence
+      to: 'Just Arrived'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: variable.ayah_presence
+      to: 'Just Arrived'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: variable.pakde_presence
+      to: 'Just Arrived'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: variable.eyang_presence
+      from: 'Just Left'
+      to: 'Just Arrived'
+    - platform: state
+      entity_id: variable.rpm_presence
+      from: 'Just Left'
+      to: 'Just Arrived'
+    - platform: state
+      entity_id: variable.ibu_presence
+      from: 'Just Left'
+      to: 'Just Arrived'
+    - platform: state
+      entity_id: variable.ayah_presence
+      from: 'Just Left'
+      to: 'Just Arrived'
+    - platform: state
+      entity_id: variable.pakde_presence
+      from: 'Just Left'
+      to: 'Just Arrived'
+  action:
+    - service: variable.set_variable
+      data_template:
+        variable: >
+          {% if trigger.entity_id == 'variable.eyang_presence' %}
+            eyang_presence
+          {% elif trigger.entity_id == 'variable.rpm_presence' %}
+            rpm_presence
+          {% elif trigger.entity_id == 'variable.ibu_presence' %}
+            ibu_presence
+          {% elif trigger.entity_id == 'variable.ayah_presence' %}
+            ayah_presence
+          {% else %}
+            pakde_presence
+          {% endif %}
+        value: Home
+- alias: Mark person as just left
+  trigger:
+    - platform: state
+      entity_id: device_tracker.nyamuk_eyang_owntracks
+      from: 'home'
+      to: 'not_home'
+    - platform: state
+      entity_id: device_tracker.nyamuk_rpmedge
+      from: 'home'
+      to: 'not_home'
+    - platform: state
+      entity_id: device_tracker.34a395c33c50
+      from: 'home'
+      to: 'not_home'
+    - platform: state
+      entity_id: device_tracker.205ef7734ec8
+      from: 'home'
+      to: 'not_home'
+    - platform: state
+      entity_id: device_tracker.40786a14bba7
+      from: 'home'
+      to: 'not_home'
+  action:
+    - service: variable.set_variable
+      data_template:
+        variable: >
+          {% if trigger.entity_id == 'device_tracker.nyamuk_eyang_owntracks' %}
+            eyang_presence
+          {% elif trigger.entity_id == 'device_tracker.nyamuk_rpmedge' %}
+            rpm_presence
+          {% elif trigger.entity_id == 'device_tracker.34a395c33c50' %}
+            ibu_presence
+          {% elif trigger.entity_id == 'device_tracker.205ef7734ec8' %}
+            ayah_presence
+          {% else %}
+            pakde_presence
+          {% endif %}
+        value: Just Left
+- alias: Mark person as away
+  trigger:
+    - platform: state
+      entity_id: variable.eyang_presence
+      to: 'Just Left'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: variable.rpm_presence
+      to: 'Just Left'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: variable.ibu_presence
+      to: 'Just Left'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: variable.ayah_presence
+      to: 'Just Left'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: variable.pakde_presence
+      to: 'Just Left'
+      for:
+        minutes: 10
+  action:
+    - service: variable.set_variable
+      data_template:
+        variable: >
+          {% if trigger.entity_id == 'variable.eyang_presence' %}
+            eyang_presence
+          {% elif trigger.entity_id == 'variable.rpm_presence' %}
+            rpm_presence
+          {% elif trigger.entity_id == 'variable.ibu_presence' %}
+            ibu_presence
+          {% elif trigger.entity_id == 'variable.ayah_presence' %}
+            ayah_presence
+          {% else %}
+            pakde_presence
+          {% endif %}
+        value: Away
+- alias: Mark person as extended away
+  trigger:
+    - platform: state
+      entity_id: variable.eyang_presence
+      to: 'Away'
+      for:
+        hours: 24
+    - platform: state
+      entity_id: variable.rpm_presence
+      to: 'Away'
+      for:
+        hours: 24
+    - platform: state
+      entity_id: variable.ibu_presence
+      to: 'Away'
+      for:
+        hours: 24
+    - platform: state
+      entity_id: variable.ayah_presence
+      to: 'Away'
+      for:
+        hours: 24
+    - platform: state
+      entity_id: variable.pakde_presence
+      to: 'Away'
+      for:
+        hours: 24
+  action:
+    - service: variable.set_variable
+      data_template:
+        variable: >
+          {% if trigger.entity_id == 'variable.eyang_presence' %}
+            eyang_presence
+          {% elif trigger.entity_id == 'variable.rpm_presence' %}
+            rpm_presence
+          {% elif trigger.entity_id == 'variable.ibu_presence' %}
+            ibu_presence
+          {% elif trigger.entity_id == 'variable.ayah_presence' %}
+            ayah_presence
+          {% else %}
+            pakde_presence
+          {% endif %}
+        value: Extended Away

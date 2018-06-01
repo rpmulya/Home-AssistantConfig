@@ -9,7 +9,9 @@ default_view:
   - group.openings
   - group.environment
   - media_player.ruang_tv
+  - media_player.family_room_speaker
   - camera.kolam
+  - group.battery_status
 climate:
   view: true
   icon: mdi:thermometer
@@ -35,6 +37,7 @@ playground:
   icon: mdi:crop-rotate
   view: true
   entities:
+  - group.battery_alert
   - group.input_booleans
 server:
   name: Server Utilization
@@ -53,11 +56,20 @@ awesome_people:
   name: 36ers
   view: false
   entities:
-  - device_tracker.90187c1b4a88
+  - sensor.eyang
   - sensor.rpm
   - device_tracker.34a395c33c50
   - device_tracker.205ef7734ec8
   - device_tracker.40786a14bba7
+var_awesome_people:
+  name: var36ers
+  view: false
+  entities:
+  - variable.eyang_presence
+  - variable.rpm_presence
+  - variable.ibu_presence
+  - variable.ayah_presence
+  - variable.pakde_presence
 external_lights:
   name: External Lights
   view: false
@@ -114,6 +126,13 @@ environment:
   - sensor.suhu_ruang_tv
   - sensor.suhu_dapur
   - sensor.humidity
+battery_status:
+  name: Battery Status
+  icon: mdi:battery-charging
+  entities:
+    - sensor.eyang_battery
+    - sensor.rpm_battery
+    - sensor.rpmiphone_battery_level
 # daily_forecast:
 #   name: Daily Forecast
 #   view: false

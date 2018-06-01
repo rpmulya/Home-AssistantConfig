@@ -11,3 +11,5 @@
     - 192.168.36.62
 - platform: owntracks
   max_gps_accuracy: 100
+- platform: gpslogger
+  password: !secret gpslogger_password

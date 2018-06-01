@@ -1,0 +1,28 @@
+- id: forward_persistent_notifications
+  alias: Forward Persistent Notifications
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: call_service
+    event_data:
+      domain: persistent_notification
+      service: create
+  action:
+  - service: notify.notifyRPM
+    data_template:
+      message: "{% set message = trigger.event.data.service_data.message %} {% if\
+        \ 'invalid authentication' in message or 'login attempts' in message %}\n\
+        \  {{ message }}: http://www.ip-tracker.org/locator/ip-lookup.php?ip={{ message.split('from\
+        \ ')[1] }}\n{% else %}\n  {{ message }}\n{% endif %}"
+- id: UpdateAvailableNotif
+  alias: Update Available Notifications
+  trigger:
+    platform: state
+    entity_id: updater.updater
+  action:
+  - service: notify.notifyRPM
+    data:
+      message: Update for Home Assistant is available.
+  - service: notify.notifyHtml5
+    data:
+      message: Update for Home Assistant is available.

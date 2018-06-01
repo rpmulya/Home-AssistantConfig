@@ -6,8 +6,15 @@
   icon: mdi:home
 
 - zone 2:
-  name: Work
+  name: BPK RI
   latitude: -6.2055346
   longitude: 106.802785
   radius: 300
   icon: mdi:briefcase
+
+- zone 3:
+  name: PKK
+  latitude: -6.3002721
+  longitude: 106.8234716
+  radius: 300
+  icon: mdi:human-female

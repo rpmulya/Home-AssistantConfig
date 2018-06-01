@@ -15,12 +15,25 @@
     - type: load_15m
     - type: last_boot
 - platform: google_geocode
+  name: Eyang
+  origin: device_tracker.nyamuk_eyang_owntracks
+  options: street, city
+  gravatar: ratning.sumadi@gmail.com
+  # display_zone: hide
+  api_key: !secret gmap_api_key
+- platform: google_geocode
   name: RPM
-  origin: device_tracker.nyamuk_rpmedge
+  origin: device_tracker.ce05160570e9b52b05 ##device_tracker.nyamuk_rpmedge
   options: street, city
   gravatar: rpmulya@gmail.com
   # display_zone: hide
-  api_key: AIzaSyA3gWdvw_WZBdJrBI12dNBISrbSIlPO0Ts
+  api_key: !secret gmap_api_key
+# - platform: mqtt
+#   state_topic: "owntracks/nyamuk/eyang_owntracks"
+#   name: "Battery HP Eyang"
+#   unit_of_measurement: "%"
+#   value_template: '{{ value_json.batt }}'
+#   device_class: battery
 - platform: cert_expiry
   host: 36ha.duckdns.org
 - platform: mqtt

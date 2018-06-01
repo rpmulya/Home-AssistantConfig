@@ -26,3 +26,19 @@ media_player.ruang_tv:
   name:
   platform: cast
   unique_id: 4b9e1605-6944-3550-be09-c78f23c10c3f
+media_player.family_room_speaker:
+  name:
+  platform: cast
+  unique_id: 0c63da15-9b8d-f367-ed5b-7d38042941dd
+sensor.rpm_battery:
+  name:
+  platform: mqtt
+  unique_id: nyamuk_rpmedge_battery
+sensor.eyang_battery:
+  name:
+  platform: mqtt
+  unique_id: nyamuk_eyang_owntracks_battery
+sensor.rpm_gps_logger_battery:
+  name:
+  platform: mqtt
+  unique_id: ce05160570e9b52b05_battery

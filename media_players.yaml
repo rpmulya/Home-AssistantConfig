@@ -1,0 +1,6 @@
+- platform: cast
+  name: Ruang TV
+  host: 192.168.36.18
+- platform: cast
+  name: Family Room Speaker
+  host: 192.168.36.25

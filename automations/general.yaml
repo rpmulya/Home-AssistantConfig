@@ -1,0 +1,54 @@
+- id: DarkTheme
+  alias: Turn On Dark Theme
+  trigger:
+  - entity_id: input_boolean.dark_theme
+    platform: state
+    to: 'on'
+  action:
+  - service: frontend.set_theme
+    data:
+      name: midnight
+- id: DefaultTheme
+  alias: Turn Off Default Theme
+  trigger:
+  - entity_id: input_boolean.dark_theme
+    platform: state
+    to: 'off'
+  action:
+  - service: frontend.set_theme
+    data:
+      name: default
+- id: DarkThemeAuto
+  alias: Turn On Dark Theme at Sunset
+  trigger:
+  - platform: sun
+    event: sunset
+  action:
+  - service: frontend.set_theme
+    data:
+      name: midnight
+- id: DefaultThemeAuto
+  alias: Turn Off Dark Theme at Sunset
+  trigger:
+  - platform: sun
+    event: sunrise
+  action:
+  - service: frontend.set_theme
+    data:
+      name: default
+- id: PingPongBot
+  alias: Ping Pong Bot
+  trigger:
+  - event_data:
+      command: /ping
+    event_type: telegram_command
+    platform: event
+  action:
+  - service: notify.notifyRPM
+    data:
+      message: pong
+      title: Yuk   
+  condition:
+  - condition: state
+    entity_id: group.input_booleans
+    state: 'On'

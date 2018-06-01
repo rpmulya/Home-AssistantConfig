@@ -96,6 +96,70 @@
       transition: 180
       brightness: 255
       color_name: white
+- id: EyangHomeNotif
+  alias: Eyang arrive home
+  trigger:
+  - platform: state
+    entity_id: device_tracker.90187c1b4a88
+    from: not_home
+    to: home
+  # condition:
+  # - condition: sun
+  #   after: sunset
+  action:
+  - service: tts.google_say
+    entity_id:
+    - media_player.family_room_speaker
+    data_template: 
+      message: "Eyang pulang"
+- id: RPMHomeNotif
+  alias: RPM arrive home
+  trigger:
+  - platform: state
+    entity_id: device_tracker.nyamuk_rpmedge
+    from: not_home
+    to: home
+  # condition:
+  # - condition: sun
+  #   after: sunset
+  action:
+  - service: tts.google_say
+    entity_id:
+    - media_player.family_room_speaker
+    data_template: 
+      message: "Papa pulang"
+- id: IbuHomeNotif
+  alias: Ibu arrive home
+  trigger:
+  - platform: state
+    entity_id: device_tracker.34a395c33c50
+    from: not_home
+    to: home
+  # condition:
+  # - condition: sun
+  #   after: sunset
+  action:
+  - service: tts.google_say
+    entity_id:
+    - media_player.family_room_speaker
+    data_template: 
+      message: "Ibu pulang"
+- id: AyahHomeNotif
+  alias: Ayah arrive home
+  trigger:
+  - platform: state
+    entity_id: device_tracker.205ef7734ec8
+    from: not_home
+    to: home
+  # condition:
+  # - condition: sun
+  #   after: sunset
+  action:
+  - service: tts.google_say
+    entity_id:
+    - media_player.family_room_speaker
+    data_template: 
+      message: "Ayah pulang"
 - id: RPMhome
   alias: I am home
   trigger:
