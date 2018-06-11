@@ -19,6 +19,7 @@ climate:
   # - group.daily_forecast
   # - group.weather_overview
   - group.dark_sky
+  - camera.kolam_onvif
 automation:
   name: Automation
   icon: mdi:flash-auto
@@ -46,7 +47,7 @@ server:
   entities:
   - sensor.processor_use
   - sensor.memory_free
-  - sensor.disk_use
+  - sensor.disk_use_percent_
   - sensor.load_1m
   - sensor.load_5m
   - sensor.load_15m
@@ -131,7 +132,7 @@ battery_status:
   icon: mdi:battery-charging
   entities:
     - sensor.eyang_battery
-    - sensor.rpm_battery
+    - sensor.rpm_gps_logger_battery
     - sensor.rpmiphone_battery_level
 # daily_forecast:
 #   name: Daily Forecast
@@ -180,4 +181,5 @@ dark_sky:
   - sensor.dark_sky_ozone
   - sensor.dark_sky_wind_speed
   - sensor.dark_sky_wind_bearing
+  - sensor.dark_sky_cloud_coverage
 

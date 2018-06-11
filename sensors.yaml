@@ -132,8 +132,8 @@
     - icon
     - temperature
     - apparent_temperature
-    - temperature_min
-    - temperature_max
+    - temperature_low
+    - temperature_high
     - humidity
     - pressure
     - visibility

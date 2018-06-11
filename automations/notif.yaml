@@ -26,3 +26,31 @@
   - service: notify.notifyHtml5
     data:
       message: Update for Home Assistant is available.
+- id: DuskWithSunElevation
+  alias: Dusk with Sun Elevation
+  trigger:
+    platform: numeric_state
+    entity_id: sun.sun
+    value_template: "{{ state.attributes.elevation }}"
+    # Can be a positive or negative number
+    below: 2.5
+  action:
+  # - service: homeassistant.turn_on
+  #   entity_id: group.external_lights
+  - service: notify.notifyRPM
+    data:
+      message: Dusk with sun elevation below 2.5
+- id: DawnWithSunElevation
+  alias: Dawn with Sun Elevation
+  trigger:
+    platform: numeric_state
+    entity_id: sun.sun
+    value_template: "{{ state.attributes.elevation }}"
+    # Can be a positive or negative number
+    above: -2.5
+  action:
+  # - service: homeassistant.turn_off
+  #   entity_id: group.extenal_lights
+  - service: notify.notifyRPM
+    data:
+      message: Dawn with sun elevation above -2.5

@@ -12,7 +12,7 @@
   retain: true
 - platform: mqtt
   name: "Depan"
-  state_topic: "stat/sw_ext_front/POWER"
+  state_topic: "stat/sw_ext_front/POWER1"
   command_topic: "cmnd/sw_ext_front/POWER"
   payload_on: "ON"
   payload_off: "OFF"
@@ -20,15 +20,18 @@
   retain: true
 - platform: mqtt
   name: "Dapur"
-  state_topic: "stat/sw_dapur/POWER"
+  state_topic: "stat/sw_dapur/POWER1"
   command_topic: "cmnd/sw_dapur/POWER"
+  availability_topic: "tele/sw_dapur/LWT"
   payload_on: "ON"
   payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
   qos: 1
   retain: true
 - platform: mqtt
   name: "Garasi"
-  state_topic: "stat/sw_garasi/POWER"
+  state_topic: "stat/sw_garasi/POWER1"
   command_topic: "cmnd/sw_garasi/POWER"
   payload_on: "ON"
   payload_off: "OFF"

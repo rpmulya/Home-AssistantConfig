@@ -34,9 +34,14 @@
     entity_id: variable.pakde_presence
     to: 'Just Arrived'
   condition:
-  - condition: state
-    entity_id: 'group.awesome_people'
-    state: 'home'
+    condition: and
+    conditions:    
+      - condition: state
+        entity_id: 'group.awesome_people'
+        state: 'home'
+      - condition: time #berisik kalau kemalaman
+        after: '05:00:00'
+        before: '22:30:00'
   action:
   - service: tts.google_say
     entity_id:
