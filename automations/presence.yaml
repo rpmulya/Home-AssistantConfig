@@ -43,6 +43,10 @@
         after: '05:00:00'
         before: '22:30:00'
   action:
+  - service: media_player.volume_set
+    data:
+      entity_id: media_player.family_room_speaker
+      volume_level: 0.5
   - service: tts.google_say
     entity_id:
     - media_player.family_room_speaker

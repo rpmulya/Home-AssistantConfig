@@ -13,7 +13,7 @@ homeassistant:
   customize: !include customize.yaml
   packages: !include_dir_named packages
 
-# iOS component
+# # iOS component
 ios:
   
 # ha cloud component
@@ -65,6 +65,9 @@ http:
     - https://google.com
     - https://home-assistant.io
   use_x_forwarded_for: True
+  trusted_proxies:
+    - 127.0.0.1
+    - !secret trustedproxy
   trusted_networks:
     - 127.0.0.1
     - !secret trusted1
@@ -85,6 +88,8 @@ updater:
       
 # Discover some devices automatically
 discovery:
+  ignore:
+    - google_cast
 
 # MQTT mosquito
 mqtt:
